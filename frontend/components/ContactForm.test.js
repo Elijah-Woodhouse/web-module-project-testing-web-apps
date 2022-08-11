@@ -43,7 +43,6 @@ test('renders THREE error messages if user enters no values into any fields.', a
 
 test('renders ONE error message if user enters a valid first name and last name but no email.', async () => {
   const inputFields = screen.getAllByRole("textbox")
-  console.log(inputFields)
   userEvent.type(inputFields[0], `${fakefName}`)
   userEvent.type(inputFields[1], `${fakelName}`)
   userEvent.type(submit)
@@ -53,11 +52,18 @@ test('renders ONE error message if user enters a valid first name and last name 
 });
 
 test('renders "email must be a valid email address" if an invalid email is entered', async () => {
+  const inputFields = screen.getAllByRole("textbox")
+  const emailField = screen.getByLabelText("Email*")
+  userEvent.type(emailField, "asdlk44")
+  //userEvent.type(submit)
+  const errormsg = await screen.findByText(/email must be a valid email address/i)
 
 });
 
 test('renders "lastName is a required field" if an last name is not entered and the submit button is clicked', async () => {
-
+  const lnameField = screen.getByLabelText(/last name*/i)
+  userEvent.type(submit)
+  const errormsg = await screen.findByText(/lastName is a required field/i)
 });
 
 test('renders all firstName, lastName and email text when submitted. Does NOT render message if message is not submitted.', async () => {
