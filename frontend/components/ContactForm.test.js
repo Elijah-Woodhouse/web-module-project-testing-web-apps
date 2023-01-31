@@ -67,11 +67,37 @@ test('renders "lastName is a required field" if an last name is not entered and 
 });
 
 test('renders all firstName, lastName and email text when submitted. Does NOT render message if message is not submitted.', async () => {
-
+  const inputFields = screen.getAllByRole("textbox")
+  userEvent.type(inputFields[0], `${fakefName}`)
+  userEvent.type(inputFields[1], `${fakelName}`)
+  userEvent.type(inputFields[2], `${fakeEmail}`)
+  userEvent.type(submit)  
+  const firstName = screen.getByText(fakefName)
+  const lastName = screen.getByText(fakefName)
+  const Email = screen.getByText(fakeEmail)
+  const message = screen.queryByText("Message:")
+  expect(firstName).toBeInTheDocument()
+  expect(lastName).toBeInTheDocument()
+  expect(Email).toBeInTheDocument()
+  expect(message).toBeNull()
 });
 
 test('renders all fields text when all fields are submitted.', async () => {
-
+  const inputFields = screen.getAllByRole("textbox")
+  const fakeMessage = "Ellijaliscjlkjelskfalvkjaksjjdlfkjaklsufhbvkasjd"
+  userEvent.type(inputFields[0], `${fakefName}`)
+  userEvent.type(inputFields[1], `${fakelName}`)
+  userEvent.type(inputFields[2], `${fakeEmail}`)
+  userEvent.type(inputFields[3], `${fakeMessage}`)
+  userEvent.type(submit)  
+  const firstName = screen.getByText(fakefName)
+  const lastName = screen.getByText(fakefName)
+  const Email = screen.getByText(fakeEmail)
+  const message = screen.getByText(fakeMessage)
+  expect(firstName).toBeInTheDocument()
+  expect(lastName).toBeInTheDocument()
+  expect(Email).toBeInTheDocument()
+  expect(message).toBeInTheDocument()
 });
 
 })

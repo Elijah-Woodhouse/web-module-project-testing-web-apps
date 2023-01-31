@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DisplayComponent from './DisplayComponent';
+import useForm from '../hooks/useForm';
 
 const formData = {
   firstName: "",
@@ -47,11 +48,18 @@ const ContactForm = () => {
 
     const hasErrors = (submitErrors.firstName === "" && submitErrors.lastName === "" && submitErrors.email === "" && submitErrors.message === "");
     setDisplayData(hasErrors);
+  };
 
+  const handleClear = (e) => {
+    e.preventDefault();
+    setForm(formData);
   };
 
   const handleChange = (e) => {
     const errorMessage = errorHandling(e.target.name, e.target.value);
+    console.log(e.target.name);
+    console.log(e.target.value);
+
 
     if (errorMessage !== "") {
       setDisplayData(false);
@@ -122,6 +130,7 @@ const ContactForm = () => {
         {displayData && <DisplayComponent form={form}/>}
 
         <button>Submit</button>
+        <button onClick={(handleClear)}>Clear Form</button>
       </form>
     </div>
   );
